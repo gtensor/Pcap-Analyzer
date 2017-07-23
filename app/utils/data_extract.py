@@ -20,33 +20,41 @@ def web_data(PCAPS, host_ip):
                 port = dport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'HTTP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'HTTP', 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'HTTP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'HTTP', 'id': id})
                 else:
                     pass
             elif dport == 80 or dport == 8080:
                 port = sport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'HTTP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'HTTP', 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'HTTP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'HTTP', 'id': id})
                 else:
                     pass
             else:
                 pass
         id += 1
-    ip_port_ids_dict = OrderedDict()  # {'192.134.13.234:232':[2,3,4,5],'192.134.13.234:236':[4,3,2,4,3]}
+
+    # {'192.134.13.234:232':[2,3,4,5],'192.134.13.234:236':[4,3,2,4,3]}
+    ip_port_ids_dict = OrderedDict()
     for ip_port_id in ip_port_id_list:
         if ip_port_id['ip_port'] in ip_port_ids_dict:
-            ip_port_ids_dict[ip_port_id['ip_port']].append(ip_port_id['id'])  # PCAPS[ip_port_id['id']].load)
+            ip_port_ids_dict[ip_port_id['ip_port']].append(ip_port_id['id'])
         else:
-            ip_port_ids_dict[ip_port_id['ip_port']] = [ip_port_id['id']]  # [PCAPS[ip_port_id['id']].load]
+            ip_port_ids_dict[ip_port_id['ip_port']] = [ip_port_id['id']]
+
     ip_port_data_list = list()
     data_id = 0
+
     for ip_port, load_list in ip_port_ids_dict.items():
         data_id += 1
         raw_data = b''.join([PCAPS[i].load for i in load_list])
@@ -56,8 +64,14 @@ def web_data(PCAPS, host_ip):
             data = raw_data.decode('GBK', 'ignore')
         else:
             data = tmp_data
-        ip_port_data_list.append({'data_id': data_id, 'ip_port': ip_port, 'data': data, 'raw_data': raw_data,
-                                  'lens': '%.3f' % (sum([len(corrupt_bytes(PCAPS[i])) for i in load_list]) / 1024.0)})
+        ip_port_data_list.append(
+            {
+                'data_id': data_id,
+                'ip_port': ip_port,
+                'data': data,
+                'raw_data': raw_data,
+                'lens': '%.3f' % (sum([len(corrupt_bytes(PCAPS[i])) for i in load_list]) / 1024.0)
+            })
     return ip_port_data_list
 
 
@@ -75,60 +89,72 @@ def mail_data(PCAPS, host_ip):
                 port = dport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'POP3', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'POP3', 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'POP3', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'POP3', 'id': id})
                 else:
                     pass
             elif sport == 143:
                 port = dport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'IMAP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'IMAP', 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'IMAP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'IMAP', 'id': id})
                 else:
                     pass
             elif sport == 25:
                 port = dport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'SMTP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'SMTP', 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'SMTP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'SMTP', 'id': id})
                 else:
                     pass
             elif dport == 110:
                 port = sport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'POP3', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'POP3', 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'POP3', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'POP3', 'id': id})
                 else:
                     pass
             elif dport == 143:
                 port = sport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'IMAP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'IMAP', 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'IMAP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'IMAP', 'id': id})
                 else:
                     pass
             elif dport == 25:
                 port = sport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'SMTP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'SMTP', 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + 'SMTP', 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + 'SMTP', 'id': id})
                 else:
                     pass
             else:
@@ -140,8 +166,10 @@ def mail_data(PCAPS, host_ip):
             ip_port_ids_dict[ip_port_id['ip_port']].append(ip_port_id['id'])  # PCAPS[ip_port_id['id']].load)
         else:
             ip_port_ids_dict[ip_port_id['ip_port']] = [ip_port_id['id']]  # [PCAPS[ip_port_id['id']].load]
+
     ip_port_data_list = list()
     data_id = 0
+
     for ip_port, load_list in ip_port_ids_dict.items():
         data_id += 1
         raw_data = b''.join([PCAPS[i].load for i in load_list])
@@ -156,8 +184,14 @@ def mail_data(PCAPS, host_ip):
         # 解决编码问题
         data = raw_data.decode('UTF-8', 'ignore')
         ip_port_data_list.append(
-            {'data_id': data_id, 'ip_port': ip_port, 'data': data, 'raw_data': raw_data, 'parse_data': parse_data,
-             'lens': '%.3f' % (sum([len(corrupt_bytes(PCAPS[i])) for i in load_list]) / 1024.0)})
+            {
+                'data_id': data_id,
+                'ip_port': ip_port,
+                'data': data,
+                'raw_data': raw_data,
+                'parse_data': parse_data,
+                'lens': '%.3f' % (sum([len(corrupt_bytes(PCAPS[i])) for i in load_list]) / 1024.0)
+            })
     return ip_port_data_list
 
 
@@ -251,7 +285,8 @@ def findmail_attachs(raw_data):
                 if filename_ and '=?' in filename_:
                     filename_ = filename_.split('?')
                     charset = filename_[1]
-                    filename = base64.b64decode(base64padding(filename_[3])).decode(charset, 'ignore')
+                    filename = base64.b64decode(
+                        base64padding(filename_[3])).decode(charset, 'ignore')
                 else:
                     filename = filename_
             else:
@@ -292,7 +327,8 @@ def pop3_parse(raw_data):
     if mailfrom_ and '=?' in mailfrom_:
         mailfrom_ = mailfrom_.split('?')
         mailfrom_address = mailfrom_[-1].split()[-1]
-        mailfrom_name = base64.b64decode(base64padding(mailfrom_[3])).decode(mailfrom_[1], 'ignore')
+        mailfrom_name = base64.b64decode(
+            base64padding(mailfrom_[3])).decode(mailfrom_[1], 'ignore')
         mailfrom = "{}".format(mailfrom_name) + " " + mailfrom_address
     else:
         mailfrom = mailfrom_
@@ -300,7 +336,8 @@ def pop3_parse(raw_data):
     if mailto_ and '=?' in mailto_:
         mailto_ = mailto_.split('?')
         mailto_address = mailto_[-1].split()[-1]
-        mailto_name = base64.b64decode(base64padding(mailto_[3])).decode(mailto_[1], 'ignore')
+        mailto_name = base64.b64decode(
+            base64padding(mailto_[3])).decode(mailto_[1], 'ignore')
         mailto = "{}".format(mailto_name) + " " + mailto_address
     else:
         mailto = mailto_
@@ -310,20 +347,31 @@ def pop3_parse(raw_data):
         mailsubject_ = mailsubject_[-1].strip()
         if mailsubject_ and '=?' in mailsubject_:
             mailsubject_ = mailsubject_.split('?')
-            mailsubject = base64.b64decode(base64padding(mailsubject_[3])).decode(mailsubject_[1], 'ignore')
+            mailsubject = base64.b64decode(
+                base64padding(mailsubject_[3])).decode(mailsubject_[1], 'ignore')
         else:
             mailsubject = mailsubject_
     else:
         mailsubject = None
     if mailcontent_:
         mailcontent_ = mailcontent_.group(1).strip().replace('\r\n', '')
-        mailcontent = base64.b64decode(base64padding(mailcontent_)).decode(charset, 'ignore')
+        mailcontent = base64.b64decode(
+            base64padding(mailcontent_)).decode(charset, 'ignore')
     else:
         mailcontent = None
     attachs_dict = findmail_attachs(raw_data)
-    parse_data = {'username': username, 'password': password, 'maildate': maildate, 'mailfrom': mailfrom,
-                  'mailto': mailto, 'mailcc': mailcc, 'mailsubject': mailsubject, 'mailmessageid': mailmessageid,
-                  'mailcontent': mailcontent, 'attachs_dict': attachs_dict}
+    parse_data = {
+        'username': username,
+        'password': password,
+        'maildate': maildate,
+        'mailfrom': mailfrom,
+        'mailto': mailto,
+        'mailcc': mailcc,
+        'mailsubject': mailsubject,
+        'mailmessageid': mailmessageid,
+        'mailcontent': mailcontent,
+        'attachs_dict': attachs_dict
+    }
     return parse_data
 
 
@@ -360,10 +408,12 @@ def imap_parse(raw_data):
         password = None
     maildate = maildate_[-1].strip() if maildate_ else None
     mailfrom_ = mailfrom_[-1].strip() if mailfrom_ else None
+
     if mailfrom_ and ('=?' in mailfrom_):
         mailfrom_ = mailfrom_.split('?')
         mailfrom_address = mailfrom_[-1].split()[-1]
-        mailfrom_name = base64.b64decode(base64padding(mailfrom_[3])).decode(mailfrom_[1], 'ignore')
+        mailfrom_name = base64.b64decode(
+            base64padding(mailfrom_[3])).decode(mailfrom_[1], 'ignore')
         mailfrom = "{}".format(mailfrom_name) + " " + mailfrom_address
     else:
         mailfrom = mailfrom_
@@ -371,30 +421,43 @@ def imap_parse(raw_data):
     if mailto_ and '=?' in mailto_:
         mailto_ = mailto_.split('?')
         mailto_address = mailto_[-1].split()[-1]
-        mailto_name = base64.b64decode(base64padding(mailto_[3])).decode(mailto_[1], 'ignore')
+        mailto_name = base64.b64decode(
+            base64padding(mailto_[3])).decode(mailto_[1], 'ignore')
         mailto = "{}".format(mailto_name) + " " + mailto_address
     else:
         mailto = mailto_
+
     mailcc = mailcc_.group(1).strip() if mailcc_ else None
     mailmessageid = mailmessageid_.group(1).strip() if mailmessageid_ else None
     if mailsubject_:
         mailsubject_ = mailsubject_[-1].strip()
         if mailsubject_ and '=?' in mailsubject_:
             mailsubject_ = mailsubject_.split('?')
-            mailsubject = base64.b64decode(base64padding(mailsubject_[3])).decode(mailsubject_[1], 'ignore')
+            mailsubject = base64.b64decode(
+                base64padding(mailsubject_[3])).decode(mailsubject_[1], 'ignore')
         else:
             mailsubject = mailsubject_
     else:
         mailsubject = None
     if mailcontent_:
         mailcontent_ = mailcontent_.group(1).strip().replace('\r\n', '')
-        mailcontent = base64.b64decode(base64padding(mailcontent_)).decode(charset, 'ignore')
+        mailcontent = base64.b64decode(
+            base64padding(mailcontent_)).decode(charset, 'ignore')
     else:
         mailcontent = None
     attachs_dict = findmail_attachs(raw_data)
-    parse_data = {'username': username, 'password': password, 'maildate': maildate, 'mailfrom': mailfrom,
-                  'mailto': mailto, 'mailcc': mailcc, 'mailsubject': mailsubject, 'mailmessageid': mailmessageid,
-                  'mailcontent': mailcontent, 'attachs_dict': attachs_dict}
+    parse_data = {
+        'username': username,
+        'password': password,
+        'maildate': maildate,
+        'mailfrom': mailfrom,
+        'mailto': mailto,
+        'mailcc': mailcc,
+        'mailsubject': mailsubject,
+        'mailmessageid': mailmessageid,
+        'mailcontent': mailcontent,
+        'attachs_dict': attachs_dict
+    }
     return parse_data
 
 
@@ -418,20 +481,24 @@ def telnet_ftp_data(PCAPS, host_ip, tfport):
                 port = dport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + proto, 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + proto, 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + proto, 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + proto, 'id': id})
                 else:
                     pass
             elif dport == tfport:
                 port = sport
                 if src == host_ip:
                     ip = dst
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + proto, 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + proto, 'id': id})
                 elif dst == host_ip:
                     ip = src
-                    ip_port_id_list.append({'ip_port': ip + ':' + str(port) + ':' + proto, 'id': id})
+                    ip_port_id_list.append(
+                        {'ip_port': ip + ':' + str(port) + ':' + proto, 'id': id})
                 else:
                     pass
             else:
@@ -450,8 +517,14 @@ def telnet_ftp_data(PCAPS, host_ip, tfport):
         raw_data = b''.join([PCAPS[i].load for i in load_list])
         # 解决编码问题
         data = raw_data.decode('UTF-8', 'ignore')
-        ip_port_data_list.append({'data_id': data_id, 'ip_port': ip_port, 'data': data, 'raw_data': raw_data,
-                                  'lens': '%.3f' % (sum([len(corrupt_bytes(PCAPS[i])) for i in load_list]) / 1024.0)})
+        ip_port_data_list.append(
+            {
+                'data_id': data_id,
+                'ip_port': ip_port,
+                'data': data,
+                'raw_data': raw_data,
+                'lens': '%.3f' % (sum([len(corrupt_bytes(PCAPS[i])) for i in load_list]) / 1024.0)
+            })
     return ip_port_data_list
 
 
@@ -495,8 +568,15 @@ def client_info(PCAPS):
                 clients_str = client[0] + ';' + clients_str
         if ether_dst and ether_src and clients_str:
             clientinfo_list.append(
-                {'sess': sess, 'ether_dst': ether_dst, 'ether_src': ether_src, 'ip_src': ip_src, 'ip_dst': ip_dst,
-                 'clients': clients_str[:-1], 'time': times})
+                {
+                    'sess': sess,
+                    'ether_dst': ether_dst,
+                    'ether_src': ether_src,
+                    'ip_src': ip_src,
+                    'ip_dst': ip_dst,
+                    'clients': clients_str[:-1],
+                    'time': times
+                })
     return clientinfo_list
 
 
@@ -541,7 +621,8 @@ def sen_data(PCAPS, host_ip):
             restp = 'PASS' + passwd.group(1)
             result = restu + '     ' + restp
         if restp.strip():
-            sendata_list.append({'ip_port': ftp['ip_port'], 'result': result, 'data': data})
+            sendata_list.append(
+                {'ip_port': ftp['ip_port'], 'result': result, 'data': data})
 
     # Mail协议帐号密码
     for mail in maildata:
@@ -552,8 +633,10 @@ def sen_data(PCAPS, host_ip):
             mailpasswd_p = re.compile(r'UGFzc3dvcmQ6\r\n(.*?)\r\n', re.S)
             username_ = mailuser_p.search(data)
             password_ = mailpasswd_p.search(data)
-            username = base64.b64decode(base64padding(username_.group(1))).decode('UTF-8') if username_ else None
-            password = base64.b64decode(base64padding(password_.group(1))).decode('UTF-8') if password_ else None
+            username = base64.b64decode(
+                base64padding(username_.group(1))).decode('UTF-8') if username_ else None
+            password = base64.b64decode(
+                base64padding(password_.group(1))).decode('UTF-8') if password_ else None
         elif 'POP3' in ip_port:
             mailuser_p = re.compile(r'USER(.*?)\r\n', re.S)
             mailpasswd_p = re.compile(r'PASS(.*?)\r\n', re.S)
@@ -581,7 +664,8 @@ def sen_data(PCAPS, host_ip):
             restp = 'password : ' + password
             result = restu + '     ' + restp
         if result.strip():
-            sendata_list.append({'ip_port': mail['ip_port'], 'result': result, 'data': data})
+            sendata_list.append(
+                {'ip_port': mail['ip_port'], 'result': result, 'data': data})
 
     # HTTP协议帐号密码
     with open('./app/utils/warning/HTTP_DATA', 'r', encoding='UTF-8') as f:
@@ -604,7 +688,9 @@ def sen_data(PCAPS, host_ip):
             restp = str(list(set([i for i, j, k in password])))
             result = restu + '     ' + restp
         if tomcat:
-            result = list(set([base64.b64decode(t.strip().replace('%3d', '=')) for t in tomcat]))
+            result = list(set(
+                [base64.b64decode(t.strip().replace('%3d', '=')) for t in tomcat]))
         if restp.strip():
-            sendata_list.append({'ip_port': web['ip_port'], 'result': result, 'data': data})
+            sendata_list.append(
+                {'ip_port': web['ip_port'], 'result': result, 'data': data})
     return sendata_list
