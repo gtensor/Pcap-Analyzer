@@ -3,3 +3,4 @@ flask-wtf
 scapy-python3
 geoip2
 gunicorn
+flask-debugtoolbar
