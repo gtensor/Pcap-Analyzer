@@ -530,7 +530,7 @@ def telnet_ftp_data(PCAPS, host_ip, tfport):
 
 # 客户端信息
 def client_info(PCAPS):
-    with open('./app/utils/warning/CLIENT_INFO', 'r', encoding='UTF-8') as f:
+    with open('./pcapalyzer/utils/warning/CLIENT_INFO', 'r', encoding='UTF-8') as f:
         lines = f.readlines()
     client_patterns = [i.strip() for i in lines]
     clientinfo_list = list()
@@ -668,7 +668,7 @@ def sen_data(PCAPS, host_ip):
                 {'ip_port': mail['ip_port'], 'result': result, 'data': data})
 
     # HTTP协议帐号密码
-    with open('./app/utils/warning/HTTP_DATA', 'r', encoding='UTF-8') as f:
+    with open('./pcapalyzer/utils/warning/HTTP_DATA', 'r', encoding='UTF-8') as f:
         lines = f.readlines()
     user = lines[0].strip()
     passwd = lines[1].strip()

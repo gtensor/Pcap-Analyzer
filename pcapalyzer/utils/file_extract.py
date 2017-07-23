@@ -184,7 +184,7 @@ def mail_file(PCAPS, host_ip, folder):
 # 所有二进制文件
 def all_files(PCAPS, folder):
     file_header = dict()
-    with open('./app/utils/protocol/FILES', 'r', encoding='UTF-8') as f:
+    with open('./pcapalyzer/utils/protocol/FILES', 'r', encoding='UTF-8') as f:
         lines = f.readlines()
     for line in lines:
         file_header[line.split(':')[0].strip()] = line.split(':')[1].strip()

@@ -7,7 +7,7 @@ from .data_extract import web_data, telnet_ftp_data
 
 # 根据可疑端口判断是否有木马病毒
 def port_warning(PCAPS, host_ip):
-    with open('./app/utils/protocol/WARN', 'r', encoding='UTF-8') as f:
+    with open('./pcapalyzer/utils/protocol/WARN', 'r', encoding='UTF-8') as f:
         warns = f.readlines()
     WARN_DICT = dict()
     for warn in warns:
@@ -53,7 +53,7 @@ def port_warning(PCAPS, host_ip):
 
 # 根据WEB内容来匹配常见WEB攻击,SQL注入，XSS，暴力破解，目录遍历，任意文件下载，木马
 def web_warning(PCAPS, host_ip):
-    with open('./app/utils/warning/HTTP_ATTACK', 'r', encoding='UTF-8') as f:
+    with open('./pcapalyzer/utils/warning/HTTP_ATTACK', 'r', encoding='UTF-8') as f:
         attacks = f.readlines()
     ATTACK_DICT = dict()
     for attack in attacks:
