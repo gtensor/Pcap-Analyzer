@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 DEBUG = True
 
 WTF_CSRF_ENABLED = False

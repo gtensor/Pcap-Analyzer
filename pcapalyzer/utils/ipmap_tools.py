@@ -16,7 +16,7 @@ def getmyip():
 
 # 获取经纬度
 def get_geo(ip):
-    reader = geoip2.database.Reader(os.getcwd() + '/app/utils/GeoIP/GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader(os.getcwd() + '/pcapalyzer/utils/GeoIP/GeoLite2-City.mmdb')
     try:
         response = reader.city(ip)
         city_name = response.country.names['zh-CN'] + response.city.names['zh-CN']
