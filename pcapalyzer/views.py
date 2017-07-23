@@ -146,7 +146,6 @@ def protoanalyzer():
                                http_value=http_value_list, dns_key=dns_key_list, dns_value=dns_value_list,
                                pcap_count=pcap_count_dict)
 
-
 # 流量分析
 @app.route('/flowanalyzer/', methods=['POST', 'GET'])
 def flowanalyzer():
